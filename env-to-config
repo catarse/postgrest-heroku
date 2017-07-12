@@ -23,12 +23,21 @@ for conf in "${config_settings[@]}"; do
   if [ "$val" ]; then
     if [[ $val =~ [^0-9] ]]; then
       # non-numbers must be quoted
+      echo "non numbers"
+      echo "${conf}=\"${val}\""
+      echo "${conf}=\"${val}\"" >> $CONF_PATH
+    elif [[ $conf == "db-schema" ]]; then
+      echo "schema match"
+      echo "${conf}=\"${val}\""
       echo "${conf}=\"${val}\"" >> $CONF_PATH
     else
+      echo "else"
+      echo "${conf}=${val}"
       echo "${conf}=${val}" >> $CONF_PATH
     fi
   fi
 done
+
 
 # Bind to correct host and port for Heroku
 echo "server-host=\"0.0.0.0\"" >> $CONF_PATH
